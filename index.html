@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<title>Banglish to Bangla Pro</title>
+
+<style>
+body {
+    font-family: Arial;
+    text-align: center;
+    background: #020617;
+    color: #0ff;
+    padding: 20px;
+}
+
+h1 {
+  font-size: 12px;
+  color: #888;
+}
+
+h2 {
+    color: #22c55e;
+}
+
+textarea {
+    width: 90%;
+    height: 120px;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    background: black;
+    color: #0f0;
+    border: 1px solid #0f0;
+}
+
+button {
+    padding: 10px 20px;
+    background: #22c55e;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<h2>🔥 Banglish → বাংলা Converter (Pro)</h2>
+<h1>Developed By Emon</h1>
+
+<textarea id="input" placeholder="Banglish likho..."></textarea><br>
+
+<button onclick="convert()">Convert</button>
+
+<textarea id="output" placeholder="বাংলা আউটপুট..." readonly></textarea>
+
+<script>
+
+// 🌐 Online dictionary load (GitHub)
+let dictionary = {};
+
+fetch("https://raw.githubusercontent.com/USERNAME/REPO/main/dictionary.json")
+.then(res => res.json())
+.then(data => {
+    dictionary = data;
+})
+.catch(() => {
+    alert("Dictionary load failed!");
+});
+
+function convert() {
+    let text = document.getElementById("input").value.toLowerCase().trim();
+
+    let words = text.split(/\s+/); // better split
+
+    let result = words.map(word => {
+
+        // exact match only (safe)
+        if (dictionary[word]) {
+            return dictionary[word];
+        }
+
+        return word;
+    });
+
+    document.getElementById("output").value = result.join(" ");
+}
+
+</script>
+
+</body>
+</html>
